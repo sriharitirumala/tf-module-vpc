@@ -95,12 +95,3 @@ resource "aws_route_table_association" "private-association" {
   route_table_id = aws_route_table.private-route-table[each.value["name"]].id
 }
 
-## Internet gateway (IGW)
-resource "aws_internet_gateway" "igw" {
-  vpc_id = aws_vpc.main.id
-
-  tags   = merge(
-    var.tags,
-    { Name = "${var.env}-igw" }
-  )
-}
