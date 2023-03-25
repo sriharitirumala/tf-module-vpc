@@ -126,7 +126,9 @@ resource "aws_route_table" "private-route-table" {
   )
 }
 
-## Private Route Table Association
+
+
+## Private Route Table Association.
 resource "aws_route_table_association" "private-association" {
 
   for_each       = var.private_subnets
@@ -134,4 +136,9 @@ resource "aws_route_table_association" "private-association" {
   #subnet_id     = aws_subnet.private_subnets[each.value["name"]].id
   route_table_id = aws_route_table.private-route-table[each.value["name"]].id
 }
-
+## Route to the default vpc for peering to work.
+resource "aws_route" "route" {
+  route_table_id              = var.default_route_table
+  destination_ipv6_cidr_block = var.vpc_cidr
+  egress_only_gateway_id      = aws_vpc_peering_connection.peer.id
+}
