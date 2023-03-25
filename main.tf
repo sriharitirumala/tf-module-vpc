@@ -12,9 +12,10 @@ resource "aws_subnet" "public_subnets" {
   tags   = merge(
     var.tags,
     { Name = "${var.env}-${each.value["name"]}" }
+  )
 
     for_each = var.public_subnets
     cidr_block = each.value["cidr_block"]
     availability_zone = each.value["availability_zone"]
 
-    }
+}
