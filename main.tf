@@ -49,6 +49,7 @@ resource "aws_route_table" "public-route-table" {
   )
 }
 
+
 ## Public Route Table Association
 resource "aws_route_table_association" "public-association" {
 
