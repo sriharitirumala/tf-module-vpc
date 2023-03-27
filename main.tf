@@ -6,6 +6,16 @@ resource "aws_vpc" "main" {
   )
 }
 
+
+resource "aws_route" "route" {
+  route_table_id = module.vpc.main_route_table_id
+  destination_cidr_block = "10.0.0.0/16"
+  gateway_id = aws_internet_gateway.gw.id
+  replace = true
+}
+
+
+
 ## Peering Connections
 resource "aws_vpc_peering_connection" "peer" {
   peer_owner_id = data.aws_caller_identity.account.account_id
